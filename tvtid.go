@@ -2,6 +2,7 @@ package tvtid
 
 import (
 	"net/http"
+	"time"
 )
 
 var (
@@ -18,4 +19,5 @@ func NewClient(httpClient httpClient, baseUrl string) TvTidClient {
 
 type TvTidClient interface {
 	GetChannels() ([]Channel, error)
+	GetPrograms(channelId string, date time.Time) ([]Program, error)
 }

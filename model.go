@@ -10,6 +10,24 @@ type Channel struct {
 	Language   string `json:"language"`
 }
 
+type Program struct {
+	Id               string   `json:"id"`
+	StartTimeUnix    int64    `json:"start"`
+	StopTimeUnix     int64    `json:"stop"`
+	Title            string   `json:"title"`
+	AvailableAsVod   bool     `json:"availableAsVod"`
+	ProgramPartIndex int      `json:"programPartIndex"`
+	Live             bool     `json:"live"`
+	Premiere         bool     `json:"premiere"`
+	Rerun            bool     `json:"rerun"`
+	Categories       []string `json:"categories"`
+}
+
 type getChannelsResponse struct {
 	Channels []Channel `json:"channels"`
+}
+
+type getProgramsResponse struct {
+	ChannelId string    `json:"id"`
+	Programs  []Program `json:"programs"`
 }

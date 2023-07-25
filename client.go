@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 type httpClient interface {
@@ -21,6 +22,26 @@ func (c *tvTidClient) GetChannels() ([]Channel, error) {
 	channelsResponse := getChannelsResponse{}
 	err := c.getFromJson(url, &channelsResponse)
 	return channelsResponse.Channels, err
+}
+
+func (c *tvTidClient) GetPrograms(channelId string, date time.Time) ([]Program, error) {
+	url := c.baseUrl + "/epg/dayviews/" + date.Format("2006-01-02") + "?ch=" + channelId
+	programsResponse := []getProgramsResponse{}
+	err := c.getFromJson(url, &programsResponse)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if len(programsResponse) == 0 {
+		return []Program{}, nil
+	}
+
+	if len(programsResponse) > 1 {
+		return nil, errors.New("Unexpected response from server")
+	}
+
+	return programsResponse[0].Programs, nil
 }
 
 func (c *tvTidClient) getFromJson(url string, v interface{}) error {
