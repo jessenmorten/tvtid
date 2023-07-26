@@ -6,7 +6,8 @@ import (
 )
 
 var (
-	baseUrl = "https://tvtid-api.api.tv2.dk/api/tvtid/v1"
+	baseUrl        = "https://tvtid-api.api.tv2.dk/api/tvtid/v1"
+	apiLocation, _ = time.LoadLocation("Europe/Copenhagen")
 )
 
 func NewDefaultClient() TvTidClient {

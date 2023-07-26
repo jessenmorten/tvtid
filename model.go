@@ -1,5 +1,7 @@
 package tvtid
 
+import "time"
+
 type Channel struct {
 	Id         string `json:"id"`
 	Title      string `json:"title"`
@@ -21,6 +23,8 @@ type Program struct {
 	Premiere         bool     `json:"premiere"`
 	Rerun            bool     `json:"rerun"`
 	Categories       []string `json:"categories"`
+	StartTime        time.Time
+	StopTime         time.Time
 }
 
 type getChannelsResponse struct {

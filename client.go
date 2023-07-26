@@ -45,7 +45,15 @@ func (c *tvTidClient) GetPrograms(channelId string, date time.Time) ([]Program, 
 		return nil, errors.New("Unexpected response from server")
 	}
 
-	return programsResponse[0].Programs, nil
+	programs := programsResponse[0].Programs
+
+	for i := range programs {
+		program := &programs[i]
+		program.StartTime = time.Unix(program.StartTimeUnix, 0).In(apiLocation)
+		program.StopTime = time.Unix(program.StopTimeUnix, 0).In(apiLocation)
+	}
+
+	return programs, nil
 }
 
 func (c *tvTidClient) getFromJson(url string, v interface{}) error {

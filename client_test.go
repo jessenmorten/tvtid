@@ -119,6 +119,22 @@ func TestGetProgramsDeserialize(t *testing.T) {
 	if actualValues != expectedValues {
 		t.Errorf("want %s, got %s", expectedValues, actualValues)
 	}
+
+	if programs[0].StartTime.Location() != apiLocation {
+		t.Errorf("want %v, got %v", apiLocation, programs[0].StartTime.Location())
+	}
+
+	if programs[0].StopTime.Location() != apiLocation {
+		t.Errorf("want %v, got %v", apiLocation, programs[0].StopTime.Location())
+	}
+
+	if programs[0].StartTime.Unix() != programs[0].StartTimeUnix {
+		t.Errorf("want %d, got %d", programs[0].StartTime.Unix(), programs[0].StartTimeUnix)
+	}
+
+	if programs[0].StopTime.Unix() != programs[0].StopTimeUnix {
+		t.Errorf("want %d, got %d", programs[0].StopTime.Unix(), programs[0].StopTimeUnix)
+	}
 }
 
 type mockHttpClient struct {
