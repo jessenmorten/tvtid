@@ -71,6 +71,23 @@ func TestGetProgramsUrl(t *testing.T) {
 	}
 }
 
+func TestGetTodaysProgramsUrl(t *testing.T) {
+	mock := newMock(nil, programsResponse)
+	client := NewClient(mock, "localhost")
+	date := time.Now()
+	expectedUrl := fmt.Sprintf("localhost/epg/dayviews/%v?ch=1", date.Format("2006-01-02"))
+
+	_, err := client.GetPrograms("1", date)
+
+	if err != nil {
+		t.Errorf("want %v, got %v", nil, err)
+	}
+
+	if mock.url != expectedUrl {
+		t.Errorf("want %s, got %s", expectedUrl, mock.url)
+	}
+}
+
 func TestGetProgramsDeserialize(t *testing.T) {
 	mock := newMock(nil, programsResponse)
 	client := NewClient(mock, "localhost")
