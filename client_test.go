@@ -7,6 +7,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetChannelsUrl(t *testing.T) {
@@ -16,42 +18,25 @@ func TestGetChannelsUrl(t *testing.T) {
 
 	_, err := client.GetChannels()
 
-	if err != nil {
-		t.Errorf("want %v, got %v", nil, err)
-	}
-
-	if mock.url != expectedUrl {
-		t.Errorf("want %s, got %s", expectedUrl, mock.url)
-	}
+	assert.Nil(t, err)
+	assert.Equal(t, mock.url, expectedUrl)
 }
 
 func TestGetChannelsDeserialize(t *testing.T) {
 	mock := newMock(nil, channelsResponse)
 	client := NewClient(mock, "localhost")
-	expectedValues := "1, 2, 3, 4, 5, 6, 7"
 
 	channels, err := client.GetChannels()
 
-	if err != nil {
-		t.Errorf("want %v, got %v", nil, err)
-	}
-
-	if len(channels) != 1 {
-		t.Errorf("want %d, got %d", 1, len(channels))
-	}
-
-	actualValues := fmt.Sprintf("%s, %s, %s, %s, %s, %d, %s",
-		channels[0].Id,
-		channels[0].Title,
-		channels[0].IconUrl,
-		channels[0].LogoUrl,
-		channels[0].SvgLogoUrl,
-		channels[0].Sort,
-		channels[0].Language)
-
-	if actualValues != expectedValues {
-		t.Errorf("want %s, got %s", expectedValues, actualValues)
-	}
+	assert.Nil(t, err)
+	assert.Equal(t, len(channels), 1)
+	assert.Equal(t, channels[0].Id, "1")
+	assert.Equal(t, channels[0].Title, "2")
+	assert.Equal(t, channels[0].IconUrl, "3")
+	assert.Equal(t, channels[0].LogoUrl, "4")
+	assert.Equal(t, channels[0].SvgLogoUrl, "5")
+	assert.Equal(t, channels[0].Sort, 6)
+	assert.Equal(t, channels[0].Language, "7")
 }
 
 func TestGetProgramsUrl(t *testing.T) {
@@ -62,13 +47,8 @@ func TestGetProgramsUrl(t *testing.T) {
 
 	_, err := client.GetPrograms("1", date)
 
-	if err != nil {
-		t.Errorf("want %v, got %v", nil, err)
-	}
-
-	if mock.url != expectedUrl {
-		t.Errorf("want %s, got %s", expectedUrl, mock.url)
-	}
+	assert.Nil(t, err)
+	assert.Equal(t, mock.url, expectedUrl)
 }
 
 func TestGetTodaysProgramsUrl(t *testing.T) {
@@ -79,62 +59,33 @@ func TestGetTodaysProgramsUrl(t *testing.T) {
 
 	_, err := client.GetPrograms("1", date)
 
-	if err != nil {
-		t.Errorf("want %v, got %v", nil, err)
-	}
-
-	if mock.url != expectedUrl {
-		t.Errorf("want %s, got %s", expectedUrl, mock.url)
-	}
+	assert.Nil(t, err)
+	assert.Equal(t, mock.url, expectedUrl)
 }
 
 func TestGetProgramsDeserialize(t *testing.T) {
 	mock := newMock(nil, programsResponse)
 	client := NewClient(mock, "localhost")
 	date, _ := time.Parse("2006-01-02", "2023-12-24")
-	expectedValues := "1, 2, 3, 4, true, 5, true, true, true, 6"
 
 	programs, err := client.GetPrograms("1", date)
 
-	if err != nil {
-		t.Errorf("want %v, got %v", nil, err)
-	}
-
-	if len(programs) != 1 {
-		t.Errorf("want %d, got %d", 1, len(programs))
-	}
-
-	actualValues := fmt.Sprintf("%s, %d, %d, %s, %v, %d, %v, %v, %v, %s",
-		programs[0].Id,
-		programs[0].StartTimeUnix,
-		programs[0].StopTimeUnix,
-		programs[0].Title,
-		programs[0].AvailableAsVod,
-		programs[0].ProgramPartIndex,
-		programs[0].Live,
-		programs[0].Premiere,
-		programs[0].Rerun,
-		programs[0].Categories[0])
-
-	if actualValues != expectedValues {
-		t.Errorf("want %s, got %s", expectedValues, actualValues)
-	}
-
-	if programs[0].StartTime.Location() != apiLocation {
-		t.Errorf("want %v, got %v", apiLocation, programs[0].StartTime.Location())
-	}
-
-	if programs[0].StopTime.Location() != apiLocation {
-		t.Errorf("want %v, got %v", apiLocation, programs[0].StopTime.Location())
-	}
-
-	if programs[0].StartTime.Unix() != programs[0].StartTimeUnix {
-		t.Errorf("want %d, got %d", programs[0].StartTime.Unix(), programs[0].StartTimeUnix)
-	}
-
-	if programs[0].StopTime.Unix() != programs[0].StopTimeUnix {
-		t.Errorf("want %d, got %d", programs[0].StopTime.Unix(), programs[0].StopTimeUnix)
-	}
+	assert.Nil(t, err)
+	assert.Equal(t, len(programs), 1)
+	assert.Equal(t, programs[0].Id, "1")
+	assert.Equal(t, programs[0].StartTimeUnix, int64(2))
+	assert.Equal(t, programs[0].StopTimeUnix, int64(3))
+	assert.Equal(t, programs[0].Title, "4")
+	assert.Equal(t, programs[0].AvailableAsVod, true)
+	assert.Equal(t, programs[0].ProgramPartIndex, 5)
+	assert.Equal(t, programs[0].Live, true)
+	assert.Equal(t, programs[0].Premiere, true)
+	assert.Equal(t, programs[0].Rerun, true)
+	assert.Equal(t, programs[0].Categories, []string{"6"})
+	assert.Equal(t, programs[0].StartTime.Location(), apiLocation)
+	assert.Equal(t, programs[0].StopTime.Location(), apiLocation)
+	assert.Equal(t, programs[0].StartTime.Unix(), programs[0].StartTimeUnix)
+	assert.Equal(t, programs[0].StopTime.Unix(), programs[0].StopTimeUnix)
 }
 
 type mockHttpClient struct {
