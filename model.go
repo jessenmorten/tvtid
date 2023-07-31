@@ -27,6 +27,21 @@ type Program struct {
 	StopTime         time.Time
 }
 
+type ProgramDetails struct {
+	Id                string   `json:"id"`
+	Url               string   `json:"url"`
+	SeriesId          string   `json:"seriesId"`
+	Title             string   `json:"title"`
+	Categories        []string `json:"categories"`
+	Description       string   `json:"desc"`
+	OrgiginalTitle    string   `json:"orgTitle"`
+	ProductionYear    int      `json:"prodYear"`
+	ProductionCountry string   `json:"prodCountry"`
+	Teaser            string   `json:"teaser"`
+	Audio             string   `json:"audio"`
+	TtvTexted         bool     `json:"ttvTexted"`
+}
+
 type getChannelsResponse struct {
 	Channels []Channel `json:"channels"`
 }
@@ -34,4 +49,8 @@ type getChannelsResponse struct {
 type getProgramsResponse struct {
 	ChannelId string    `json:"id"`
 	Programs  []Program `json:"programs"`
+}
+
+type getProgramDetailsResponse struct {
+	Program ProgramDetails `json:"program"`
 }

@@ -88,6 +88,37 @@ func TestGetProgramsDeserialize(t *testing.T) {
 	assert.Equal(t, programs[0].StopTime.Unix(), programs[0].StopTimeUnix)
 }
 
+func TestGetProgramDetailsUrl(t *testing.T) {
+	mock := newMock(nil, programDetailsResponse)
+	client := NewClient(mock, "localhost")
+
+	_, err := client.GetProgramDetails("1", "2")
+
+	assert.Nil(t, err)
+	assert.Equal(t, "localhost/schedules/channels/1/programs/2", mock.url)
+}
+
+func TestGetProgramDetailsDeserialize(t *testing.T) {
+	mock := newMock(nil, programDetailsResponse)
+	client := NewClient(mock, "localhost")
+
+	program, err := client.GetProgramDetails("1", "2")
+
+	assert.Nil(t, err)
+	assert.Equal(t, "1", program.Id)
+	assert.Equal(t, "2", program.Url)
+	assert.Equal(t, "3", program.SeriesId)
+	assert.Equal(t, "4", program.Title)
+	assert.Equal(t, []string{"6"}, program.Categories)
+	assert.Equal(t, "7", program.Description)
+	assert.Equal(t, "8", program.OrgiginalTitle)
+	assert.Equal(t, 9, program.ProductionYear)
+	assert.Equal(t, "10", program.ProductionCountry)
+	assert.Equal(t, "11", program.Teaser)
+	assert.Equal(t, "12", program.Audio)
+	assert.Equal(t, true, program.TtvTexted)
+}
+
 type mockHttpClient struct {
 	response string
 	err      error
@@ -110,6 +141,7 @@ func (m *mockHttpClient) Do(req *http.Request) (*http.Response, error) {
 }
 
 var (
-	channelsResponse = "{\"channels\": [{\"id\": \"1\", \"title\": \"2\", \"icon\": \"3\", \"logo\": \"4\", \"svgLogo\": \"5\", \"sort\": 6, \"language\": \"7\"}]}"
-	programsResponse = "[{\"id\": \"1\", \"programs\": [{\"id\": \"1\", \"start\": 2, \"stop\": 3, \"title\": \"4\", \"availableAsVod\": true, \"programPartIndex\": 5, \"live\": true, \"premiere\": true, \"rerun\": true, \"categories\": [\"6\"]}]}]"
+	channelsResponse       = "{\"channels\": [{\"id\": \"1\", \"title\": \"2\", \"icon\": \"3\", \"logo\": \"4\", \"svgLogo\": \"5\", \"sort\": 6, \"language\": \"7\"}]}"
+	programsResponse       = "[{\"id\": \"1\", \"programs\": [{\"id\": \"1\", \"start\": 2, \"stop\": 3, \"title\": \"4\", \"availableAsVod\": true, \"programPartIndex\": 5, \"live\": true, \"premiere\": true, \"rerun\": true, \"categories\": [\"6\"]}]}]"
+	programDetailsResponse = "{\"program\": {\"id\": \"1\", \"url\": \"2\", \"seriesId\": \"3\", \"title\": \"4\", \"categories\": [\"6\"], \"desc\": \"7\", \"orgTitle\": \"8\", \"prodYear\": 9, \"prodCountry\": \"10\", \"teaser\": \"11\", \"audio\": \"12\", \"ttvTexted\": true}}"
 )

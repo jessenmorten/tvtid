@@ -22,4 +22,5 @@ type TvTidClient interface {
 	GetChannels() ([]Channel, error)
 	GetPrograms(channelId string, date time.Time) ([]Program, error)
 	GetTodaysPrograms(channelId string) ([]Program, error)
+	GetProgramDetails(channelId string, programId string) (ProgramDetails, error)
 }
