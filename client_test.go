@@ -19,7 +19,7 @@ func TestGetChannelsUrl(t *testing.T) {
 	_, err := client.GetChannels()
 
 	assert.Nil(t, err)
-	assert.Equal(t, mock.url, expectedUrl)
+	assert.Equal(t, expectedUrl, mock.url)
 }
 
 func TestGetChannelsDeserialize(t *testing.T) {
@@ -29,14 +29,14 @@ func TestGetChannelsDeserialize(t *testing.T) {
 	channels, err := client.GetChannels()
 
 	assert.Nil(t, err)
-	assert.Equal(t, len(channels), 1)
-	assert.Equal(t, channels[0].Id, "1")
-	assert.Equal(t, channels[0].Title, "2")
-	assert.Equal(t, channels[0].IconUrl, "3")
-	assert.Equal(t, channels[0].LogoUrl, "4")
-	assert.Equal(t, channels[0].SvgLogoUrl, "5")
-	assert.Equal(t, channels[0].Sort, 6)
-	assert.Equal(t, channels[0].Language, "7")
+	assert.Equal(t, 1, len(channels))
+	assert.Equal(t, "1", channels[0].Id)
+	assert.Equal(t, "2", channels[0].Title)
+	assert.Equal(t, "3", channels[0].IconUrl)
+	assert.Equal(t, "4", channels[0].LogoUrl)
+	assert.Equal(t, "5", channels[0].SvgLogoUrl)
+	assert.Equal(t, 6, channels[0].Sort)
+	assert.Equal(t, "7", channels[0].Language)
 }
 
 func TestGetProgramsUrl(t *testing.T) {
@@ -48,7 +48,7 @@ func TestGetProgramsUrl(t *testing.T) {
 	_, err := client.GetPrograms("1", date)
 
 	assert.Nil(t, err)
-	assert.Equal(t, mock.url, expectedUrl)
+	assert.Equal(t, expectedUrl, mock.url)
 }
 
 func TestGetTodaysProgramsUrl(t *testing.T) {
@@ -60,7 +60,7 @@ func TestGetTodaysProgramsUrl(t *testing.T) {
 	_, err := client.GetPrograms("1", date)
 
 	assert.Nil(t, err)
-	assert.Equal(t, mock.url, expectedUrl)
+	assert.Equal(t, expectedUrl, mock.url)
 }
 
 func TestGetProgramsDeserialize(t *testing.T) {
@@ -71,21 +71,21 @@ func TestGetProgramsDeserialize(t *testing.T) {
 	programs, err := client.GetPrograms("1", date)
 
 	assert.Nil(t, err)
-	assert.Equal(t, len(programs), 1)
-	assert.Equal(t, programs[0].Id, "1")
-	assert.Equal(t, programs[0].StartTimeUnix, int64(2))
-	assert.Equal(t, programs[0].StopTimeUnix, int64(3))
-	assert.Equal(t, programs[0].Title, "4")
-	assert.Equal(t, programs[0].AvailableAsVod, true)
-	assert.Equal(t, programs[0].ProgramPartIndex, 5)
-	assert.Equal(t, programs[0].Live, true)
-	assert.Equal(t, programs[0].Premiere, true)
-	assert.Equal(t, programs[0].Rerun, true)
-	assert.Equal(t, programs[0].Categories, []string{"6"})
-	assert.Equal(t, programs[0].StartTime.Location(), apiLocation)
-	assert.Equal(t, programs[0].StopTime.Location(), apiLocation)
-	assert.Equal(t, programs[0].StartTime.Unix(), programs[0].StartTimeUnix)
-	assert.Equal(t, programs[0].StopTime.Unix(), programs[0].StopTimeUnix)
+	assert.Equal(t, 1, len(programs))
+	assert.Equal(t, "1", programs[0].Id)
+	assert.Equal(t, int64(2), programs[0].StartTimeUnix)
+	assert.Equal(t, int64(3), programs[0].StopTimeUnix)
+	assert.Equal(t, "4", programs[0].Title)
+	assert.Equal(t, true, programs[0].AvailableAsVod)
+	assert.Equal(t, 5, programs[0].ProgramPartIndex)
+	assert.Equal(t, true, programs[0].Live)
+	assert.Equal(t, true, programs[0].Premiere)
+	assert.Equal(t, true, programs[0].Rerun)
+	assert.Equal(t, []string{"6"}, programs[0].Categories)
+	assert.Equal(t, apiLocation, programs[0].StartTime.Location())
+	assert.Equal(t, apiLocation, programs[0].StopTime.Location())
+	assert.Equal(t, programs[0].StartTimeUnix, programs[0].StartTime.Unix())
+	assert.Equal(t, programs[0].StopTimeUnix, programs[0].StopTime.Unix())
 }
 
 func TestGetProgramDetailsUrl(t *testing.T) {
