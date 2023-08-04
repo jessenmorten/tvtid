@@ -3,7 +3,7 @@ package tvtid
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"time"
 )
@@ -79,7 +79,7 @@ func (c *tvTidClient) getFromJson(url string, v interface{}) error {
 		return errors.New("Error sending request: " + err.Error())
 	}
 
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 
 	if err != nil {
 		return errors.New("Error reading response: " + err.Error())
