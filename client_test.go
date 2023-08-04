@@ -1,7 +1,6 @@
 package tvtid
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -44,18 +43,6 @@ func TestGetProgramsUrl(t *testing.T) {
 	client := NewClient(mock, "localhost")
 	date, _ := time.Parse("2006-01-02", "2023-12-24")
 	expectedUrl := "localhost/epg/dayviews/2023-12-24?ch=1"
-
-	_, err := client.GetPrograms("1", date)
-
-	assert.Nil(t, err)
-	assert.Equal(t, expectedUrl, mock.url)
-}
-
-func TestGetTodaysProgramsUrl(t *testing.T) {
-	mock := newMock(nil, programsResponse)
-	client := NewClient(mock, "localhost")
-	date := time.Now()
-	expectedUrl := fmt.Sprintf("localhost/epg/dayviews/%v?ch=1", date.Format("2006-01-02"))
 
 	_, err := client.GetPrograms("1", date)
 

@@ -24,10 +24,6 @@ func (c *tvTidClient) GetChannels() ([]Channel, error) {
 	return channelsResponse.Channels, err
 }
 
-func (c *tvTidClient) GetTodaysPrograms(channelId string) ([]Program, error) {
-	return c.GetPrograms(channelId, time.Now())
-}
-
 func (c *tvTidClient) GetPrograms(channelId string, date time.Time) ([]Program, error) {
 	url := c.baseUrl + "/epg/dayviews/" + date.Format("2006-01-02") + "?ch=" + channelId
 	programsResponse := []getProgramsResponse{}
