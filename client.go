@@ -66,30 +66,21 @@ func (c *tvTidClient) GetProgramDetails(channelId string, programId string) (Pro
 
 func (c *tvTidClient) getFromJson(url string, v interface{}) error {
 	request, err := http.NewRequest("GET", url, nil)
-
 	if err != nil {
-		return errors.New("Error creating request: " + err.Error())
+		return err
 	}
 
 	request.Header.Add("Accept", "application/json")
-
 	response, err := c.httpClient.Do(request)
-
 	if err != nil {
-		return errors.New("Error sending request: " + err.Error())
+		return err
 	}
 
 	body, err := io.ReadAll(response.Body)
-
 	if err != nil {
-		return errors.New("Error reading response: " + err.Error())
+		return err
 	}
 
 	err = json.Unmarshal(body, &v)
-
-	if err != nil {
-		return errors.New("Error parsing response: " + err.Error())
-	}
-
-	return nil
+	return err
 }
