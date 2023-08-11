@@ -52,16 +52,16 @@ func (c *tvTidClient) GetPrograms(channelId string, date time.Time) ([]Program, 
 	return programs, nil
 }
 
-func (c *tvTidClient) GetProgramDetails(channelId string, programId string) (ProgramDetails, error) {
+func (c *tvTidClient) GetProgramDetails(channelId string, programId string) (*ProgramDetails, error) {
 	url := c.baseUrl + "/schedules/channels/" + channelId + "/programs/" + programId
 	programDetailsResponse := getProgramDetailsResponse{}
 	err := c.getFromJson(url, &programDetailsResponse)
 
 	if err != nil {
-		return ProgramDetails{}, err
+        return nil, err
 	}
 
-	return programDetailsResponse.Program, nil
+	return &programDetailsResponse.Program, nil
 }
 
 func (c *tvTidClient) getFromJson(url string, v interface{}) error {
