@@ -1,7 +1,7 @@
 package tvtid
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"testing"
@@ -123,7 +123,7 @@ func newMock(err error, response string) *mockHttpClient {
 func (m *mockHttpClient) Do(req *http.Request) (*http.Response, error) {
 	m.url = req.URL.String()
 	return &http.Response{
-		Body: ioutil.NopCloser(strings.NewReader(m.response)),
+		Body: io.NopCloser(strings.NewReader(m.response)),
 	}, m.err
 }
 
