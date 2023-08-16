@@ -28,18 +28,23 @@ type Program struct {
 }
 
 type ProgramDetails struct {
-	Id                string   `json:"id"`
-	Url               string   `json:"url"`
-	SeriesId          string   `json:"seriesId"`
-	Title             string   `json:"title"`
-	Categories        []string `json:"categories"`
-	Description       string   `json:"desc"`
-	OrgiginalTitle    string   `json:"orgTitle"`
-	ProductionYear    int      `json:"prodYear"`
-	ProductionCountry string   `json:"prodCountry"`
-	Teaser            string   `json:"teaser"`
-	Audio             string   `json:"audio"`
-	TtvTexted         bool     `json:"ttvTexted"`
+	Id                string           `json:"id"`
+	Url               string           `json:"url"`
+	SeriesId          string           `json:"seriesId"`
+	Title             string           `json:"title"`
+	Categories        []string         `json:"categories"`
+	Description       string           `json:"desc"`
+	OrgiginalTitle    string           `json:"orgTitle"`
+	ProductionYear    int              `json:"prodYear"`
+	ProductionCountry string           `json:"prodCountry"`
+	Teaser            string           `json:"teaser"`
+	Audio             string           `json:"audio"`
+	TtvTexted         bool             `json:"ttvTexted"`
+	ParentalGuidance  ParentalGuidance `json:"parentalGuidance"`
+}
+
+type ParentalGuidance struct {
+	MinimumAge int `json:"minimumAge"`
 }
 
 type getChannelsResponse struct {

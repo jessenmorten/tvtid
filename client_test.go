@@ -104,6 +104,7 @@ func TestGetProgramDetailsDeserialize(t *testing.T) {
 	assert.Equal(t, "11", program.Teaser)
 	assert.Equal(t, "12", program.Audio)
 	assert.Equal(t, true, program.TtvTexted)
+	assert.Equal(t, 13, program.ParentalGuidance.MinimumAge)
 }
 
 type mockHttpClient struct {
@@ -130,5 +131,5 @@ func (m *mockHttpClient) Do(req *http.Request) (*http.Response, error) {
 var (
 	channelsResponse       = "{\"channels\": [{\"id\": \"1\", \"title\": \"2\", \"icon\": \"3\", \"logo\": \"4\", \"svgLogo\": \"5\", \"sort\": 6, \"language\": \"7\"}]}"
 	programsResponse       = "[{\"id\": \"1\", \"programs\": [{\"id\": \"1\", \"start\": 2, \"stop\": 3, \"title\": \"4\", \"availableAsVod\": true, \"programPartIndex\": 5, \"live\": true, \"premiere\": true, \"rerun\": true, \"categories\": [\"6\"]}]}]"
-	programDetailsResponse = "{\"program\": {\"id\": \"1\", \"url\": \"2\", \"seriesId\": \"3\", \"title\": \"4\", \"categories\": [\"6\"], \"desc\": \"7\", \"orgTitle\": \"8\", \"prodYear\": 9, \"prodCountry\": \"10\", \"teaser\": \"11\", \"audio\": \"12\", \"ttvTexted\": true}}"
+	programDetailsResponse = "{\"program\": {\"id\": \"1\", \"url\": \"2\", \"seriesId\": \"3\", \"title\": \"4\", \"categories\": [\"6\"], \"desc\": \"7\", \"orgTitle\": \"8\", \"prodYear\": 9, \"prodCountry\": \"10\", \"teaser\": \"11\", \"audio\": \"12\", \"ttvTexted\": true, \"parentalGuidance\": { \"minimumAge\": 13 }}}"
 )
